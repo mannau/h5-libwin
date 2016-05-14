@@ -408,8 +408,7 @@ typedef uLong FAR uLongf;
    typedef unsigned long z_crc_t;
 #endif
 
-/* Mingw-w64 has unistd.h but omits including io.h which it needs */
-#if 0    /* was set to #if 1 by ./configure */
+#if 1    /* was set to #if 1 by ./configure */
 #  define Z_HAVE_UNISTD_H
 #endif
 
@@ -482,7 +481,7 @@ typedef uLong FAR uLongf;
 #  define z_off_t long
 #endif
 
-#if !defined(_WIN32) && defined(Z_LARGE64)
+#if defined(Z_LARGE64)
 #  define z_off64_t off64_t
 #else
 #  if defined(_WIN32) && !defined(__GNUC__) && !defined(Z_SOLO)

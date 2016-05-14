@@ -27,7 +27,8 @@ namespace H5 {
 //! Class FileAccPropList represents the HDF5 file access property list.
 class H5_DLLCPP FileAccPropList : public PropList {
    public:
-	static const FileAccPropList DEFAULT;
+	///\brief Default file access property list.
+	static const FileAccPropList& DEFAULT;
 
 	// Creates a file access property list.
 	FileAccPropList();
@@ -73,13 +74,6 @@ class H5_DLLCPP FileAccPropList : public PropList {
 		      const FileAccPropList& raw_plist,
 		      const H5std_string& meta_ext = ".meta",
 		      const H5std_string& raw_ext = ".raw") const;
-	// These two overloaded functions are kept for backward compatibility
-	// only; they missed the const's and will be removed in future release.
-	void setSplit(FileAccPropList& meta_plist, FileAccPropList& raw_plist,
-	     const char* meta_ext=".meta", const char* raw_ext=".raw") const;
-	void setSplit(FileAccPropList& meta_plist, FileAccPropList& raw_plist,
-	     const H5std_string& meta_ext=".meta",
-	     const H5std_string& raw_ext=".raw") const;
 
 	// Sets the maximum size of the data sieve buffer.
 	void setSieveBufSize(size_t bufsize) const;
@@ -129,6 +123,13 @@ class H5_DLLCPP FileAccPropList : public PropList {
 	// Returns garbage collecting references setting.
 	unsigned getGcReferences() const;
 
+	// Sets bounds on versions of library format to be used when creating
+	// or writing objects.
+	void setLibverBounds(H5F_libver_t libver_low, H5F_libver_t libver_high) const;
+
+	// Gets the current settings for the library version format bounds.
+	void getLibverBounds(H5F_libver_t& libver_low, H5F_libver_t& libver_high) const;
+
 	///\brief Returns this class name.
 	virtual H5std_string fromClass () const { return("FileAccPropList"); }
 
@@ -141,6 +142,20 @@ class H5_DLLCPP FileAccPropList : public PropList {
 
 	// Noop destructor
 	virtual ~FileAccPropList();
+
+#ifndef DOXYGEN_SHOULD_SKIP_THIS
+
+        // Deletes the global constant, should only be used by the library
+        static void deleteConstants();
+
+    private:
+        static FileAccPropList* DEFAULT_;
+
+        // Creates the global constant, should only be used by the library
+        static FileAccPropList* getConstant();
+
+#endif // DOXYGEN_SHOULD_SKIP_THIS
+
 };
 #ifndef H5_NO_NAMESPACE
 }

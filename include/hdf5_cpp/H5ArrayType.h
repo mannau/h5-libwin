@@ -31,11 +31,16 @@ class H5_DLLCPP ArrayType : public DataType {
 	// specified base type.
 	ArrayType(const DataType& base_type, int ndims, const hsize_t* dims);
 
+	// Assignment operator
+	ArrayType& operator=(const ArrayType& rhs);
+
 	// Returns the number of dimensions of this array datatype.
-	int getArrayNDims();
+	int getArrayNDims() const;
+	int getArrayNDims(); // deprecated
 
 	// Returns the sizes of dimensions of this array datatype.
-	int getArrayDims(hsize_t* dims);
+	int getArrayDims(hsize_t* dims) const;
+	int getArrayDims(hsize_t* dims); // deprecated
 
 	///\brief Returns this class name.
 	virtual H5std_string fromClass () const { return("ArrayType"); }
@@ -49,13 +54,8 @@ class H5_DLLCPP ArrayType : public DataType {
 	// Noop destructor
 	virtual ~ArrayType();
 
-   protected:
 	// Default constructor
 	ArrayType();
-
-   private:
-	int rank;		// Rank of the array
-	hsize_t* dimensions;	// Sizes of the array dimensions
 };
 #ifndef H5_NO_NAMESPACE
 }

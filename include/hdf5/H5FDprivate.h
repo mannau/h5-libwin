@@ -40,14 +40,6 @@
 /* Length of filename buffer */
 #define H5FD_MAX_FILENAME_LEN      1024
 
-/* MPI based VFDs */
-#define IS_H5FD_MPIO(f)	/* (H5F_t *f) */				    \
-    (H5FD_MPIO==H5F_DRIVER_ID(f))
-
-/* Single macro to check for all file drivers that use MPI */
-#define IS_H5FD_MPI(file)  \
-        (IS_H5FD_MPIO(file))
-
 #ifdef H5_HAVE_PARALLEL
 /* ======== Temporary data transfer properties ======== */
 /* Definitions for memory MPI type property */
@@ -142,7 +134,7 @@ H5_DLL herr_t H5FD_read(H5FD_t *file, const H5P_genplist_t *dxpl, H5FD_mem_t typ
     haddr_t addr, size_t size, void *buf/*out*/);
 H5_DLL herr_t H5FD_write(H5FD_t *file, const H5P_genplist_t *dxpl, H5FD_mem_t type,
     haddr_t addr, size_t size, const void *buf);
-H5_DLL herr_t H5FD_flush(H5FD_t *file, hid_t dxpl_id, hbool_t closing);
+H5_DLL herr_t H5FD_flush(H5FD_t *file, hid_t dxpl_id, unsigned closing);
 H5_DLL herr_t H5FD_truncate(H5FD_t *file, hid_t dxpl_id, hbool_t closing);
 H5_DLL herr_t H5FD_get_fileno(const H5FD_t *file, unsigned long *filenum);
 H5_DLL herr_t H5FD_get_vfd_handle(H5FD_t *file, hid_t fapl, void** file_handle);
